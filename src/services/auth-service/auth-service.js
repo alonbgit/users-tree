@@ -6,6 +6,7 @@ import UnauthorizedError from './unauthorized-error';
 
 const STORAGE_KEYS = {
     SECRET: 'user-secret',
+    USER_ID: 'user-id',
 }
 
 class AuthService {
@@ -22,6 +23,17 @@ class AuthService {
         }
     }
 
+    async isLoggedIn () {
+        try {
+            await this.verifyIsLoggedIn();
+        } catch (ex) {
+            if (ex instanceof UnauthorizedError) {
+                return false;
+            }
+        }
+        return true;
+    }
+
     async login (email, password) {
         const secret = this.encode(email, password);
         const userId = await this.fetchUserId(secret);
@@ -29,7 +41,12 @@ class AuthService {
             return false;
         }
         localStorageService.set(STORAGE_KEYS.SECRET, secret);
+        localStorageService.set(STORAGE_KEYS.USER_ID, userId);
         return true;
+    }
+
+    getUserId () {
+        return localStorageService.get(STORAGE_KEYS.USER_ID);
     }
 
     async fetchUserId (secret) {
@@ -41,6 +58,7 @@ class AuthService {
 
     logout () {
         localStorageService.remove(STORAGE_KEYS.SECRET);
+        localStorageService.remove(STORAGE_KEYS.USER_ID);
     }
 
     encode (email, password) {

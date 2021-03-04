@@ -1,35 +1,36 @@
-import { useEffect, useCallback, useState } from 'react';
+import { useEffect, useState } from 'react';
 import  { useHistory } from 'react-router-dom';
-import Button from '../common/button/button';
-import authService from '../../services/auth-service/auth-service';
 import userService from '../../services/user-service/user-service';
+import authService from '../../services/auth-service/auth-service';
 import UnauthorizedError from '../../services/auth-service/unauthorized-error';
+import Layout from '../layout/layout';
 
 import './users-page.scss';
 
 const UsersPage = () => {
     const history = useHistory();
     const [usersTree, setUsersTree] = useState(null);
+    const [username, setUsername] = useState(null);
 
     useEffect(() => {
         const getUsers = async () => {
-            let users;
             try {
-                users = await userService.getUsersTree();
+                const userId = authService.getUserId();
+                const userFullName = await userService.getUserFullNameById(userId);
+                const users = await userService.getUsersTree();
+
+                setUsername(userFullName);
+                setUsersTree(users);
             } catch (ex) {
                 if (ex instanceof UnauthorizedError) {
                     history.push('/');
                     return;
                 }
+                throw ex;
             }
-            setUsersTree(users);
+            
         };
         getUsers();
-    }, [history]);
-
-    const onLogout = useCallback(() => {
-        authService.logout();
-        history.push('/');
     }, [history]);
 
     if (!usersTree) {
@@ -37,12 +38,12 @@ const UsersPage = () => {
     }
 
     return (
-        <div className='users-page'>
+        <Layout
+            className='users-page'
+            username={username}
+        >
             Users Page
-            <Button onClick={onLogout}>
-                Logout
-            </Button>
-        </div>
+        </Layout>
     )
 }
 
