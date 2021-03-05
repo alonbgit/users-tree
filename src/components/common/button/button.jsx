@@ -8,8 +8,8 @@ const Button = (props) => {
     return (
         <button
             type='button'
+            className={classNames('button', { 'button--disabled': isDisabled }, className)}
             onClick={onClick}
-            className={classNames('button', className)}
             disabled={isDisabled}
         >
             {children}

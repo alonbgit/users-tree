@@ -11,11 +11,14 @@ const LoginForm = (props) => {
     const history = useHistory();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [showLoginError, setShowLoginError] = useState(false);
 
     const onLoginClick = useCallback(async () => {
         const success = await authService.login(email, password);
         if (success) {
             history.push('/users');
+        } else {
+            setShowLoginError(true);
         }
     }, [history, email, password]);
 
@@ -45,6 +48,13 @@ const LoginForm = (props) => {
                     onChange={onPasswordChange}
                 />
             </Label>
+            {showLoginError && (
+                <span className='login-form__error'>
+                    Invalid username or password :(
+                    <br />
+                    Please try again
+                </span>
+            )}
             <Button
                 className='login-form__login-btn'
                 onClick={onLoginClick}
