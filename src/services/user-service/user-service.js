@@ -21,7 +21,29 @@ class UserService {
     }
 
     async getUsersTree () {
-        return this.getUsers();
+        // get the users flat array
+        const users = [...await this.getUsers()];
+        // first, take all the top managers
+        const usersTree = users.filter(user => !user.managerId);
+        usersTree.forEach((user) => {
+            this.buildTree(user, users)
+        });
+        return usersTree;
+    }
+
+    printTree (tree) {
+        tree.forEach((child) => {
+            console.log(child.id);
+            this.printTree(child.children);
+        });
+    }
+
+    buildTree (user, usersTree) {
+        const children = usersTree.filter(c => c.managerId === user.id);
+        user.children = children;
+        children.forEach((child) => {
+            this.buildTree(child, usersTree);
+        });
     }
 
     async getUserById (userId) {
