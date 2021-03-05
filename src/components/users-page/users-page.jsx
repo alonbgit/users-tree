@@ -22,8 +22,7 @@ const UsersPage = () => {
                 setUsername(userFullName);
                 setUsersTree(users);
 
-                console.log(users);
-                userService.printTree(users, 0);
+                console.log('users tree', users);
             } catch (ex) {
                 if (ex instanceof UnauthorizedError) {
                     history.push('/');

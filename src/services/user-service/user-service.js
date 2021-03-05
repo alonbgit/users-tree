@@ -22,28 +22,32 @@ class UserService {
 
     async getUsersTree () {
         // get the users flat array
-        const users = [...await this.getUsers()];
-        // first, take all the top managers
-        const usersTree = users.filter(user => !user.managerId);
-        usersTree.forEach((user) => {
-            this.buildTree(user, users)
-        });
-        return usersTree;
+        const users = await this.getUsers();
+        return this.buildUsersTree(users);
     }
 
-    printTree (tree) {
-        tree.forEach((child) => {
-            console.log(child.id);
-            this.printTree(child.children);
+    buildUsersTree (users) {
+        const usersMap = {};
+        users.forEach((user) => {
+            usersMap[user.id] = user;
         });
-    }
 
-    buildTree (user, usersTree) {
-        const children = usersTree.filter(c => c.managerId === user.id);
-        user.children = children;
-        children.forEach((child) => {
-            this.buildTree(child, usersTree);
+        const root = [];
+
+        users.forEach((user) => {
+            const { managerId } = user;
+            if (managerId) {
+                const manager = usersMap[managerId];
+                if (!manager.children) {
+                    manager.children = [];
+                }
+                manager.children.push(user);
+            } else {
+                root.push(user);
+            }
         });
+
+        return root;
     }
 
     async getUserById (userId) {
