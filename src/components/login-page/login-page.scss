@@ -1,4 +1,10 @@
 .login-page {
+    padding: 30px;
+
+    &__title {
+        margin: 0;
+    }
+
     .login-form {
         position: absolute;
         left: 50%;

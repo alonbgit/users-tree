@@ -1,11 +1,13 @@
 .login-form {
-    border: 1px solid #000000;
     display: flex;
     flex-direction: column;
-    width: 300px;
-    height: 130px;
+    width: 345px;
+    height: 170px;
     padding: 36px;
     border-radius: 10px;
+    box-shadow: -9px -9px 12px -7px rgba(244,244,244,0.91);
+    border: 1px solid #DDDFE2;
+    background: #FFFFFF;
 
     .label {
         margin-top: 10px;

@@ -2,6 +2,8 @@ import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import Header from './header/header';
 
+import './layout.scss';
+
 const Layout = ({ children, className, username }) => (
     <div className={classNames('layout', className)}>
         <Header username={username} />

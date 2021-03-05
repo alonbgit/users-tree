@@ -4,16 +4,16 @@
     display: inline-block;
     font-family: inherit;
     font-size: 14px;
-    border-radius: 20px;
-    background-color: #FFFFFF;
-    color: #000000;
-    border: 1px solid #000000;
+    border-radius: 17px;
+    color: #FFFFFF;
+    border: 0;
     cursor: pointer;
-    transition: background-color 0.2s;
+    transition: opacity 0.3s;
     letter-spacing: 0.2px;
     outline: 0;
+    background-color: #0B83ED;
 
     &:hover {
-        background-color: #ECE4E4;
+        opacity: 0.8;
     }
 }

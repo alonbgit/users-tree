@@ -22,7 +22,7 @@ const UsersPage = () => {
                 setUsername(userFullName);
                 setUsersTree(users);
 
-                console.log('users tree', users);
+                console.log('---Users Tree---', users);
             } catch (ex) {
                 if (ex instanceof UnauthorizedError) {
                     history.push('/');
@@ -40,11 +40,15 @@ const UsersPage = () => {
     }
 
     return (
-        <Layout
-            className='users-page'
-            username={username}
-        >
-            Users Page
+        <Layout username={username}>
+            <div className='users-page'>
+                <h1 className='users-page__title'>
+                    Users Page
+                </h1>
+                <h2>
+                    The users tree is printed inside the browser console
+                </h2>
+            </div>
         </Layout>
     )
 }

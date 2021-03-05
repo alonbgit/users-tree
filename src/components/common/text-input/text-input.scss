@@ -1,9 +1,15 @@
 .text-input {
-    height: 26px;
+    height: 45px;
     outline: 0;
     font-family: inherit;
-    font-size: 14px;
     border-radius: 6px;
-    border: 1px solid black;
+    border: 1px solid #DDDFE2;
     padding: 0 10px;
+    box-sizing: border-box;
+    transition: 0.2s border-color;
+    font-size: inherit;
+
+    &:hover, &:focus {
+        border-color: #0B83ED;
+    }
 }

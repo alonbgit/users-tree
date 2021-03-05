@@ -2,9 +2,11 @@
     display: flex;
     align-items: center;
     justify-content: flex-end;
-    height: 60px;
+    height: 66px;
     border-bottom: 1px solid black;
     padding: 0 30px;
+    background: #242526;
+    color: #D7D9DE;
 
     &__username {
         margin-right: 20px;
