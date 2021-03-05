@@ -21,7 +21,6 @@ class UserService {
     }
 
     async getUsersTree () {
-        // get the users flat array
         const users = await this.getUsers();
         return this.buildUsersTree(users);
     }
